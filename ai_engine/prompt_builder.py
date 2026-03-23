@@ -1,16 +1,21 @@
 def build_prompt(feature_description: str) -> str:
-    prompt = f"""
-Generate detailed manual test cases for the following feature:
+    return f"""
+You are a QA engineer.
+
+Generate test cases for the following feature:
 
 Feature: {feature_description}
 
-Format strictly as:
+Return STRICTLY in JSON format like this:
 
-Test Case ID:
-Title:
-Steps:
-Expected Result:
+[
+  {{
+    "id": "TC_01",
+    "title": "Test title",
+    "steps": ["step1", "step2"],
+    "expected_result": "expected outcome"
+  }}
+]
 
-Generate at least 3 test cases.
+Do not add any explanation. Only return JSON.
 """
-    return prompt

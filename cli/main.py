@@ -1,4 +1,5 @@
 import sys
+import json
 from test_generator.generator import generate_test_cases
 
 
@@ -13,7 +14,7 @@ def main():
 
     test_cases = generate_test_cases(feature_description)
 
-    print(test_cases)
+    print(json.dumps(test_cases, indent=2))
 
 
 if __name__ == "__main__":
