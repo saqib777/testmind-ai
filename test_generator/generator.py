@@ -1,22 +1,13 @@
-import json
+from ai_engine.prompt_builder import build_prompt
+from ai_engine.llm_client import generate_from_llm
+from ai_engine.parser import parse_llm_output
 
 
-def parse_llm_output(response: str):
-    try:
-        # Clean response (LLMs sometimes add junk)
-        cleaned = response.strip()
+def generate_test_cases(feature_description: str):
+    prompt = build_prompt(feature_description)
 
-        # Find JSON start
-        start = cleaned.find("[")
-        end = cleaned.rfind("]") + 1
+    raw_response = generate_from_llm(prompt)
 
-        json_str = cleaned[start:end]
+    parsed = parse_llm_output(raw_response)
 
-        return json.loads(json_str)
-
-    except Exception as e:
-        return {
-            "error": "Failed to parse response",
-            "raw_output": response,
-            "exception": str(e)
-        }
+    return parsed
