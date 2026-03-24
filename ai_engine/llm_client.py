@@ -1,19 +1,25 @@
-import os
-from openai import OpenAI
-from dotenv import load_dotenv
+import requests
 
-load_dotenv()
+OLLAMA_URL = "http://localhost:11434/api/generate"
+MODEL = "llama3"   # or "gemma3:4b" if you prefer
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_from_llm(prompt: str) -> str:
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "You are a senior QA engineer."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.3
-    )
+    try:
+        response = requests.post(
+            OLLAMA_URL,
+            json={
+                "model": MODEL,
+                "prompt": prompt,
+                "stream": False
+            },
+            timeout=60
+        )
 
-    return response.choices[0].message.content
+        response.raise_for_status()
+        data = response.json()
+
+        return data.get("response", "")
+
+    except Exception as e:
+        return f"[ERROR] Ollama failed: {str(e)}"
