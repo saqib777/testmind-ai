@@ -13,7 +13,7 @@ def generate_from_llm(prompt: str) -> str:
                 "prompt": prompt,
                 "stream": False
             },
-            timeout=60
+            timeout=180
         )
 
         response.raise_for_status()
