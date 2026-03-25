@@ -20,6 +20,7 @@ def generate_from_llm(prompt: str) -> str:
         data = response.json()
 
         return data.get("response", "")
+        print("[DEBUG] Raw response:", data)
 
     except Exception as e:
         return f"[ERROR] Ollama failed: {str(e)}"
