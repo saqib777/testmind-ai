@@ -3,10 +3,8 @@ import requests
 # Ollama local API endpoint
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
-# Use a stable, lightweight model
-MODEL = "gemma3:4b"   # Recommended
-# MODEL = "llama3:latest"  # Optional (heavier)
-
+# Use a stable model
+MODEL = "gemma3:4b"
 
 def generate_from_llm(prompt: str) -> str:
     try:
@@ -19,8 +17,10 @@ def generate_from_llm(prompt: str) -> str:
                 "model": MODEL,
                 "prompt": prompt,
                 "stream": False,
+                "format": "json",  # 🔥 VERY IMPORTANT
                 "options": {
-                    "temperature": 0.2   # makes output stable for JSON
+                    "temperature": 0.2,
+                    "num_predict": 200
                 }
             },
             timeout=180
