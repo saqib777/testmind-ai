@@ -1,23 +1,25 @@
 def build_prompt(feature_description: str) -> str:
     return f"""
-You are a senior QA engineer.
+You are a software test engineer.
 
-Generate test cases in STRICT JSON format.
+Generate structured test cases in STRICT JSON format.
 
 Feature:
 {feature_description}
 
 Rules:
-- Return ONLY JSON
-- No explanations
-- No extra text
+- Output MUST be valid JSON
+- No explanations, only JSON
+- Include positive, negative, and edge cases
 
 Format:
 [
   {{
-    "title": "Test case title",
+    "test_case_id": "TC001",
+    "test_case_name": "Short name",
     "steps": ["step1", "step2"],
-    "expected_result": "expected outcome"
+    "expected_result": "Expected result",
+    "priority": "High/Medium/Low"
   }}
 ]
 """
