@@ -1,31 +1,21 @@
-import json
-import re
+def build_prompt(feature_description: str) -> str:
+    return f"""
+You are a software test engineer.
 
-def parse_llm_output(raw_output: str):
-    try:
-        # First attempt: direct parse
-        return json.loads(raw_output)
+Generate 3 to 5 test cases.
 
-    except:
-        try:
-            # Extract JSON block
-            json_match = re.search(r'\{.*\}', raw_output, re.DOTALL)
-            if json_match:
-                cleaned = json_match.group(0)
+Format strictly like this:
 
-                # Fix escaped quotes
-                cleaned = cleaned.replace('\\"', '"')
+Test Case 1:
+Name: ...
+Steps:
+- step 1
+- step 2
+Expected Result: ...
 
-                return json.loads(cleaned)
+Test Case 2:
+...
 
-        except Exception as e:
-            return {
-                "error": "Failed to parse response",
-                "raw_output": raw_output,
-                "exception": str(e)
-            }
-
-    return {
-        "error": "Failed to parse response",
-        "raw_output": raw_output
-    }
+Feature:
+{feature_description}
+"""
