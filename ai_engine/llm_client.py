@@ -17,7 +17,7 @@ def generate_from_llm(prompt: str) -> str:
                 "model": MODEL,
                 "prompt": prompt,
                 "stream": False,
-                "format": "json",  # 🔥 VERY IMPORTANT
+                # "format": "json",  # 🔥 VERY IMPORTANT
                 "options": {
                     "temperature": 0.2,
                     "num_predict": 500
