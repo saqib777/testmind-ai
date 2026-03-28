@@ -2,26 +2,20 @@ def build_prompt(feature_description: str) -> str:
     return f"""
 You are a software test engineer.
 
-Generate test cases in STRICT JSON format.
+Generate 3 to 5 test cases.
 
-Rules:
-- Output MUST be valid JSON
-- DO NOT truncate output
-- DO NOT leave incomplete fields
-- DO NOT include explanations
-- Ensure JSON is complete and closed properly
+Format strictly like this:
+
+Test Case 1:
+Name: ...
+Steps:
+- step 1
+- step 2
+Expected Result: ...
+
+Test Case 2:
+...
 
 Feature:
 {feature_description}
-
-Output format:
-{{
-  "test_cases": [
-    {{
-      "test_case_name": "string",
-      "steps": ["step1", "step2"],
-      "expected_result": "string"
-    }}
-  ]
-}}
 """
