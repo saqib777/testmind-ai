@@ -20,7 +20,7 @@ def generate_from_llm(prompt: str) -> str:
                 "format": "json",  # 🔥 VERY IMPORTANT
                 "options": {
                     "temperature": 0.2,
-                    "num_predict": 200
+                    "num_predict": 500
                 }
             },
             timeout=180
