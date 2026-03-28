@@ -1,21 +1,27 @@
-def build_prompt(feature_description: str) -> str:
-    return f"""
-You are a software test engineer.
+def parse_llm_output(raw_output: str):
+    test_cases = []
+    current = {}
 
-Generate 3 to 5 test cases.
+    lines = raw_output.split("\n")
 
-Format strictly like this:
+    for line in lines:
+        line = line.strip()
 
-Test Case 1:
-Name: ...
-Steps:
-- step 1
-- step 2
-Expected Result: ...
+        if line.startswith("Test Case"):
+            if current:
+                test_cases.append(current)
+                current = {}
 
-Test Case 2:
-...
+        elif line.startswith("Name:"):
+            current["test_case_name"] = line.replace("Name:", "").strip()
 
-Feature:
-{feature_description}
-"""
+        elif line.startswith("-"):
+            current.setdefault("steps", []).append(line.replace("-", "").strip())
+
+        elif line.startswith("Expected Result:"):
+            current["expected_result"] = line.replace("Expected Result:", "").strip()
+
+    if current:
+        test_cases.append(current)
+
+    return {"test_cases": test_cases}
