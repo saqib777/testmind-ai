@@ -4,7 +4,7 @@ import requests
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
 # Use a stable model
-MODEL = "llama3"
+MODEL = "gemma3:4b"
 
 def generate_from_llm(prompt: str) -> str:
     try:
